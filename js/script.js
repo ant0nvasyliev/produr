@@ -143,11 +143,199 @@ document.addEventListener('touchmove', (event) => {
     }
 }, { passive: false });
 
-// Обробка форми
-contactForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+// Функціонал модального вікна
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('contactModal');
+    const openModalBtn = document.getElementById('openContactModal');
+    const closeModalBtn = document.querySelector('.close');
+    const contactForm = document.getElementById('contactForm');
     
-    // Тут буде логіка відправки форми
-    alert('Дякуємо! Ваше повідомлення відправлено. Ми зв\'яжемося з вами найближчим часом.');
-    closeModal();
+    // Відкриття модального вікна
+    openModalBtn.addEventListener('click', openModal);
+    
+    // Закриття модального вікна
+    closeModalBtn.addEventListener('click', closeModal);
+    
+    // Закриття при кліку поза модальним вікном
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // Закриття по Escape
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === 'block') {
+            closeModal();
+        }
+    });
+    
+    // Обробка відправлення форми
+    contactForm.addEventListener('submit', handleFormSubmit);
+    
+    // Маска для телефонного номера
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', formatPhoneNumber);
+    }
+    
+    function openModal() {
+        modal.style.display = 'block';
+        document.body.classList.add('body-no-scroll');
+        setTimeout(() => {
+            document.getElementById('name').focus();
+        }, 100);
+    }
+    
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.classList.remove('body-no-scroll');
+        contactForm.reset();
+    }
+    
+    function formatPhoneNumber(event) {
+        let value = event.target.value.replace(/\D/g, '');
+        
+        if (value.length > 0) {
+            value = '+38 (0' + value.substring(2);
+        }
+        
+        if (value.length > 7) {
+            value = value.substring(0, 7) + ') ' + value.substring(7);
+        }
+        if (value.length > 12) {
+            value = value.substring(0, 12) + ' ' + value.substring(12);
+        }
+        if (value.length > 15) {
+            value = value.substring(0, 15) + ' ' + value.substring(15);
+        }
+        if (value.length > 18) {
+            value = value.substring(0, 18);
+        }
+        
+        event.target.value = value;
+    }
+    
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        
+        const formData = new FormData(contactForm);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            message: formData.get('message')
+        };
+        
+        // Валідація форми
+        if (!validateForm(data)) {
+            return;
+        }
+        
+        // Блокування кнопки відправки
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Відправка...';
+        submitBtn.disabled = true;
+        
+        // Додаємо додаткові параметри для Formspree
+        const formDataToSend = new FormData(contactForm);
+        formDataToSend.append('_replyto', data.email);
+        
+        // Відправляємо форму
+        fetch(contactForm.action, {
+            method: 'POST',
+            body: formDataToSend,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Форма успішно відправлена - Formspree сам зробить redirect
+                // Можна додатково очистити форму
+                contactForm.reset();
+                
+                // Закриваємо модальне вікно
+                setTimeout(() => {
+                    closeModal();
+                }, 500);
+            } else {
+                throw new Error('Помилка відправки');
+            }
+        })
+        .catch(error => {
+            console.error('Помилка відправки:', error);
+            // Показуємо просте сповіщення про помилку
+            alert('❌ Сталася помилка при відправці. Спробуйте ще раз або зателефонуйте нам.');
+        })
+        .finally(() => {
+            // Розблокувати кнопку
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
+    }
+    
+    function validateForm(data) {
+        // Перевірка обов'язкових полів
+        if (!data.name.trim()) {
+            showFieldError('name', 'Будь ласка, введіть ваше ім\'я');
+            return false;
+        }
+        
+        if (!data.email.trim()) {
+            showFieldError('email', 'Будь ласка, введіть email');
+            return false;
+        } else if (!isValidEmail(data.email)) {
+            showFieldError('email', 'Будь ласка, введіть коректний email');
+            return false;
+        }
+        
+        if (!data.message.trim()) {
+            showFieldError('message', 'Будь ласка, введіть повідомлення');
+            return false;
+        }
+        
+        return true;
+    }
+    
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    function showFieldError(fieldName, message) {
+        const field = document.getElementById(fieldName);
+        const formGroup = field.closest('.form-group');
+        
+        // Видаляємо попередні помилки
+        const existingError = formGroup.querySelector('.field-error');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        // Додаємо стиль помилки
+        field.style.borderColor = '#e74c3c';
+        
+        // Додаємо повідомлення про помилку
+        const errorElement = document.createElement('div');
+        errorElement.className = 'field-error';
+        errorElement.style.color = '#e74c3c';
+        errorElement.style.fontSize = '14px';
+        errorElement.style.marginTop = '5px';
+        errorElement.textContent = message;
+        
+        formGroup.appendChild(errorElement);
+        
+        // Фокус на поле з помилкою
+        field.focus();
+        
+        // Видаляємо помилку при зміні значення
+        field.addEventListener('input', function() {
+            field.style.borderColor = '#ddd';
+            if (existingError) {
+                existingError.remove();
+            }
+        }, { once: true });
+    }
 });

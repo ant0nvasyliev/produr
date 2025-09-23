@@ -502,13 +502,13 @@ footer {
     margin: 0 auto;
     padding: 0;
     width: 90%;
-    max-width: 600px;
-    max-height: 85vh; /* Зменшуємо для кращого відображення */
+    max-width: 500px; /* Зменшили ширину, бо полів менше */
+    max-height: 85vh;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     overflow-y: auto;
     overflow-x: hidden;
-    -webkit-overflow-scrolling: touch; /* Плавний скрол для iOS */
+    -webkit-overflow-scrolling: touch;
 }
 
 .modal-header {
@@ -523,20 +523,19 @@ footer {
     z-index: 10;
 }
 
-/* Стилі для кнопки закриття */
 .close {
     font-size: 28px;
     font-weight: bold;
     color: #aaa;
-    cursor: pointer; /* Додаємо курсор pointer */
-    transition: color 0.3s ease; /* Плавний перехід для кольору */
+    cursor: pointer;
+    transition: color 0.3s ease;
     line-height: 1;
     padding: 0 5px;
 }
 
 .close:hover,
 .close:focus {
-    color: #333; /* Зміна кольору при наведенні */
+    color: #333;
     text-decoration: none;
 }
 
@@ -552,11 +551,6 @@ body.body-no-scroll {
     width: 100%;
 }
 
-/* Поліпшуємо скрол для тачпадів */
-.modal-content {
-    scroll-behavior: smooth;
-}
-
 /* Стилі для форми */
 .form-group {
     margin-bottom: 20px;
@@ -570,7 +564,6 @@ body.body-no-scroll {
 }
 
 .form-group input,
-.form-group select,
 .form-group textarea {
     width: 100%;
     padding: 10px;
@@ -582,7 +575,27 @@ body.body-no-scroll {
 
 .form-group textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 120px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Стилі для стану завантаження кнопки */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Стилі для помилок в полях форми */
+.field-error {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
 }
 
 @media (max-width: 768px) {
@@ -605,6 +618,6 @@ body.body-no-scroll {
     }
     
     .close {
-        font-size: 24px; /* Трохи менший розмір на мобільних */
+        font-size: 24px;
     }
 }
