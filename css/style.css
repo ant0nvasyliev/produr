@@ -22,7 +22,7 @@ body {
 }
 
 header {
-    background: linear-gradient(rgba(44, 62, 80, 0.5), rgba(44, 62, 80, 0.6)), url('/images/produr-hero.png') center/cover no-repeat;
+    background: linear-gradient(rgba(44, 62, 80, 0.5), rgba(44, 62, 80, 0.6)), url('../images/produr-hero.png') center/cover no-repeat;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
