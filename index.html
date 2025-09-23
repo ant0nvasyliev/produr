@@ -151,11 +151,13 @@
                     <i class="fas fa-phone"></i>
                     <h3>Телефон</h3>
                     <p>+38 (099) 123-45-67</p>
+                    <a href="tel:+380991234567" class="btn">Зателефонувати</a>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
                     <h3>Email</h3>
                     <p>info@gipsomaster.com</p>
+                    <button class="btn" id="openContactModal">Написати</button>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
@@ -163,10 +165,58 @@
                     <p>м. Київ, вул. Будівельна, 25</p>
                 </div>
             </div>
-            
-            <a href="tel:+380991234567" class="btn">Зателефонувати</a>
         </div>
     </section>
+
+    <!-- Модальне вікно -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Написати нам</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Ім'я *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Номер телефону</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+38 (0__) ___ __ __">
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Тема повідомлення *</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Оберіть тему</option>
+                        <option value="consultation">Консультація</option>
+                        <option value="calculation">Розрахунок вартості</option>
+                        <option value="order">Замовити послугу</option>
+                        <option value="other">Інше питання</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Повідомлення *</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Опишіть ваше питання детально..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="attachment">Додати файли (не обов'язково)</label>
+                    <input type="file" id="attachment" name="attachment" accept="image/*,.pdf,.doc,.docx">
+                    <small>Можна додати фото, плани або креслення (JPG, PDF, DOC)</small>
+                </div>
+                
+                <button type="submit" class="btn">Надіслати повідомлення</button>
+            </form>
+        </div>
+    </div>
     
     <footer>
         <div class="container">

@@ -50,3 +50,104 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Модальне вікно
+const modal = document.getElementById('contactModal');
+const openBtn = document.getElementById('openContactModal');
+const closeBtn = document.querySelector('.close');
+const contactForm = document.getElementById('contactForm');
+const modalContent = document.querySelector('.modal-content');
+
+// Змінна для відстеження стану модального вікна
+let isModalOpen = false;
+
+// Функція для блокування скролу body
+function disableBodyScroll() {
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100vh';
+}
+
+// Функція для розблокування скролу body
+function enableBodyScroll() {
+    document.body.style.overflow = '';
+    document.body.style.height = '';
+}
+
+// Відкриття модального вікна
+openBtn.addEventListener('click', () => {
+    modal.style.display = 'block';
+    disableBodyScroll();
+    isModalOpen = true;
+    
+    // Автоматично скролимо до верху модального вікна
+    setTimeout(() => {
+        modalContent.scrollTop = 0;
+    }, 10);
+});
+
+// Закриття модального вікна
+closeBtn.addEventListener('click', closeModal);
+
+// Закриття при кліку поза вікном
+modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
+// Закриття по ESC
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isModalOpen) {
+        closeModal();
+    }
+});
+
+// Функція закриття модального вікна
+function closeModal() {
+    modal.style.display = 'none';
+    enableBodyScroll();
+    isModalOpen = false;
+    contactForm.reset();
+}
+
+// Обробка скролу всередині модального вікна
+modalContent.addEventListener('wheel', (event) => {
+    // Дозволяємо скрол всередині модального вікна
+    event.stopPropagation();
+    
+    // Запобігаємо скролу body, коли досягнуто меж модального вікна
+    const isAtTop = modalContent.scrollTop === 0;
+    const isAtBottom = modalContent.scrollTop + modalContent.clientHeight >= modalContent.scrollHeight - 1;
+    
+    if ((isAtTop && event.deltaY < 0) || (isAtBottom && event.deltaY > 0)) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
+// Для тачпадів - обробляємо подію scroll
+modalContent.addEventListener('scroll', (event) => {
+    event.stopPropagation();
+});
+
+// Запобігаємо скролу body при відкритій модалці
+document.addEventListener('wheel', (event) => {
+    if (isModalOpen && !modalContent.contains(event.target)) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
+// Для тачпадів і мобільних пристроїв
+document.addEventListener('touchmove', (event) => {
+    if (isModalOpen && !modalContent.contains(event.target)) {
+        event.preventDefault();
+    }
+}, { passive: false });
+
+// Обробка форми
+contactForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    
+    // Тут буде логіка відправки форми
+    alert('Дякуємо! Ваше повідомлення відправлено. Ми зв\'яжемося з вами найближчим часом.');
+    closeModal();
+});
