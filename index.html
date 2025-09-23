@@ -169,37 +169,52 @@
     </section>
 
     <!-- Модальне вікно -->
-<div id="contactModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Написати нам</h3>
-            <span class="close">&times;</span>
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Написати нам</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="contactForm" class="contact-form" action="https://formspree.io/f/mqaykayn" method="POST">
+                <input type="hidden" name="_subject" value="Нова заявка з сайту ГіпсоМайстер">
+                <input type="hidden" name="_language" value="uk">
+                
+                <div class="form-group">
+                    <label for="name">Ім'я *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Номер телефону</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+38 (0__) ___ __ __">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Повідомлення *</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Опишіть ваше питання детально..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Надіслати повідомлення</button>
+            </form>
         </div>
-        <form id="contactForm" class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-            <input type="hidden" name="_subject" value="Нова заявка з сайту ГіпсоМайстер">
-            <input type="hidden" name="_language" value="uk">
-            
-            <div class="form-group">
-                <label for="name">Ім'я *</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Email *</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="phone">Номер телефону</label>
-                <input type="tel" id="phone" name="phone" placeholder="+38 (0__) ___ __ __">
-            </div>
-            
-            <div class="form-group">
-                <label for="message">Повідомлення *</label>
-                <textarea id="message" name="message" rows="5" placeholder="Опишіть ваше питання детально..." required></textarea>
-            </div>
-            
-            <button type="submit" class="btn">Надіслати повідомлення</button>
-        </form>
     </div>
-</div>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+            </div>
+            <p>&copy; 2023 ГіпсоМайстер. Всі права захищені.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

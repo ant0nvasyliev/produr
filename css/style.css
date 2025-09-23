@@ -436,7 +436,7 @@ footer {
     }
     
     .contact-item {
-         flex: 0 0 calc(50% - 40px);
+        flex: 0 0 calc(50% - 40px);
     }
 }
 
@@ -466,6 +466,7 @@ footer {
     
     .nav-links li {
         margin: 15px 0;
+        margin-left: 0; /* Виправлено: додано для мобільної версії */
     }
     
     .mobile-menu-btn {
@@ -475,11 +476,17 @@ footer {
     .btn-outline {
         margin-left: 0;
         margin-top: 15px;
+        display: block; /* Виправлено: додано для правильного відображення */
     }
     
     .contact-item {
         flex: 0 0 100%;
         margin: 10px 0;
+    }
+    
+    /* Виправлено адаптивність для process-step на малих екранах */
+    .process-step {
+        flex: 0 0 100%;
     }
 }
 
@@ -502,7 +509,7 @@ footer {
     margin: 0 auto;
     padding: 0;
     width: 90%;
-    max-width: 500px; /* Зменшили ширину, бо полів менше */
+    max-width: 500px;
     max-height: 85vh;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -619,5 +626,33 @@ button:disabled {
     
     .close {
         font-size: 24px;
+    }
+}
+
+/* Виправлення для кнопки в service-content */
+.service-content .btn {
+    display: inline-block; /* Додано для консистентності */
+}
+
+/* Виправлення для контейнера секцій */
+.container {
+    padding: 0 15px; /* Додано відступи для малих екранів */
+    width: 100%; /* Виправлено ширину */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Виправлення для hero-content на малих екранах */
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 0 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
     }
 }
