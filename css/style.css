@@ -44,7 +44,7 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px;
+    padding: 20px 60px;
     z-index: 1000;
     background: rgba(44, 62, 80, 0.95);
     transition: var(--transition);
@@ -54,7 +54,7 @@ nav {
 }
 
 .nav-scrolled {
-    padding: 15px 20px;
+    padding: 12px 60px;
     box-shadow: var(--shadow);
 }
 
@@ -644,10 +644,10 @@ button:disabled {
     }
 }
 
-/* Виправлення для кнопки в service-content */
+/* Виправлення для кнопки в service-content
 .service-content .btn {
     display: inline-block; /* Додано для консистентності */
-}
+ */
 
 /* Виправлення для контейнера секцій */
 .container {
